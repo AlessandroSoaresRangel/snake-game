@@ -7,17 +7,25 @@ RIGHT = 0
 
 class Snake:
     def __init__(self):
+        self.head = None
         self.segments = []
         self.create_snake()
-        self.head = self.segments[0]
 
     def create_snake(self):
         for i in range(3):
-            self.segments.append(Turtle(shape="square"))
-            self.segments[i].penup()
-            if i - 1 >= 0:
-                self.segments[i].goto(x=self.segments[i - 1].xcor() - 20, y=0)
-            self.segments[i].color("white")
+            self.add_segment()
+
+    def add_segment(self):
+        new_segment = Turtle(shape="square")
+        new_segment.color("white")
+        if self.head is None:
+            self.head = new_segment
+        new_segment.penup()
+        if new_segment is not self.head:
+            new_segment.goto(x=self.segments[self.segments.index(self.segments[-1]) - 1].xcor() - 20,
+                             y=self.segments[self.segments.index(self.segments[-1]) - 1].ycor())
+
+        self.segments.append(new_segment)
 
     def move(self):
         for snake_number in range(len(self.segments) - 1, 0, -1):
