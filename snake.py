@@ -18,7 +18,7 @@ class Snake:
     def add_segment(self):
         new_segment = Turtle(shape="square")
         new_segment.color("white")
-        if self.head is None:
+        if self.head is None or not self.segments:
             self.head = new_segment
         new_segment.penup()
         if new_segment is not self.head:
@@ -26,6 +26,12 @@ class Snake:
                              y=self.segments[self.segments.index(self.segments[-1]) - 1].ycor())
 
         self.segments.append(new_segment)
+
+    def reset(self):
+        for seg in self.segments:
+            seg.goto(1000,  1000)
+        self.segments.clear()
+        self.create_snake()
 
     def move(self):
         for snake_number in range(len(self.segments) - 1, 0, -1):
